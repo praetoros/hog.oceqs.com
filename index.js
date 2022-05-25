@@ -81,6 +81,5 @@ function rateHog() {
 $(document).ready(function () {
     $('#hog-players').DataTable({
         paging: false,
-        order: [[5, 'desc'],[3, 'desc']],
     });
 });
