@@ -48,6 +48,11 @@ namespace Hog {
             return $this->returnIfIpUsed($ip, $hogId);
         }
 
+        public function getIfNameUsed(string $name):bool
+        {
+            return $this->returnIfNameUsed($name);
+        }
+
     }
 
 }

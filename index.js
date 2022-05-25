@@ -30,7 +30,11 @@ function submitNewHog() {
             success: function (result) {
                 console.log(result);
                 console.log('success: ' + result['data']);
-                location.reload();
+                if (result['status'] === 4){
+                    alert('This player is already in the database')
+                } else {
+                    location.reload();
+                }
             },
             error: function (result){
                 console.log(result);

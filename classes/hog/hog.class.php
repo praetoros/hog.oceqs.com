@@ -177,6 +177,25 @@ namespace Hog {
             return (bool)$stmt->rowCount();
         }
 
+        protected function returnIfNameUsed(string $hogPlayers_name): bool
+        {
+            $sql = "
+            SELECT
+                *
+            FROM
+                `tbl_hogPlayers`
+            WHERE
+                `hogPlayers_name` like :hogPlayers_name
+            ;";
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([
+                'hogPlayers_name' => $hogPlayers_name
+            ]);
+
+            return (bool)$stmt->rowCount();
+        }
+
     }
 
 }
