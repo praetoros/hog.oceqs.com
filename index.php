@@ -70,6 +70,7 @@ $ranks = $HogSelect->getRankListWithId();
             </tbody>
         </table>
         <h3>Rate/View Existing Hog Players</h3>
+        <h4>You can rate a player once every 24 hours</h4>
         <table id="hog-players" class="display table table-hover">
             <thead>
             <tr>

@@ -33,15 +33,6 @@ namespace Hog {
             return $this->returnRankListWithId();
         }
 
-        public function getRankIdForSr(int $sr): int
-        {
-            if ($sr >= 0 && $sr <= 5000){
-                return $this->returnRankIdForSr($sr);
-            } else {
-                return 0;
-            }
-
-        }
 
         public function getIfIpUsed(string $ip, int $hogId):bool
         {

@@ -165,7 +165,9 @@ namespace Hog {
             WHERE
                 `hogRatings_player` like :hogRatings_player
                 AND
-                `hogRatings_submitted` like :hogRatings_submitted
+                `hogRatings_submitted` like :hogRatings_submitted   
+                AND
+                `hogRatings_time` >= NOW() - INTERVAL 1 DAY
             ;";
 
             $stmt = $this->connect()->prepare($sql);

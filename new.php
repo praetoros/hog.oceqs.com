@@ -19,20 +19,18 @@ $region = $_POST['newHog_region'] ?? 0;
 $rating = $_POST['newHog_rating'] ?? 0;
 if (preg_match('/^\w*$/',$name) && !$HogSelect->getIfNameUsed($name)){
     if (preg_match('/^[\w#]*$/',$btag) && preg_match('/^[1-5]$/',$region)){
-        if (isset($rank) && isset($rating)){
+        if (preg_match('/^\d$|^10$/',$rating) && preg_match('/^[1-7]$/',$rank)){
             $hogId = $HogSet->addNewHog($btag, $name, $region);
-            if (is_numeric($rating) && is_numeric($rank) && $rating >= 0 && $rating <= 10 && $rank > 0 && $rank <= 7) {
-                $HogSet->addNewHogRating($rating, $rank, $_SERVER['REMOTE_ADDR'], $hogId);
-            }
+            $HogSet->addNewHogRating($rating, $rank, $_SERVER['REMOTE_ADDR'], $hogId);
             echo json_encode(['status' => 1,'data'=>$hogId]);
         } else{
-            echo json_encode(['status' => 0,'data'=>'unset']);
+            echo json_encode(['status' => 0,'data'=>'ratingOrRank']);
         }
     } else {
-        echo json_encode(['status' => 3,'data'=>'invalid']);
+        echo json_encode(['status' => 3,'data'=>'regionOrBtag']);
     }
 } else {
-    echo json_encode(['status' => 4,'data'=>'nameUsed']);
+    echo json_encode(['status' => 4,'data'=>'nameUsedOrInvalid']);
 }
 
 
