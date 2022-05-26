@@ -254,7 +254,7 @@ namespace Hog {
                 JOIN `tbl_hogSr` ON `tbl_hogRatings`.`hogRatings_sr` = `tbl_hogSr`.`hogSr_id`
             WHERE
                 `hogRatings_player` like :hogRatings_player
-            ORDER BY `hogRatings_id`
+            ORDER BY `hogRatings_id` DESC
             ;";
 
             $stmt = $this->connect()->prepare($sql);
