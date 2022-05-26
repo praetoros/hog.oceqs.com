@@ -27,7 +27,7 @@ namespace Hog {
                 JOIN
                     `tbl_hogRegions` ON `tbl_hogPlayers`.`hogPlayers_region` = `tbl_hogRegions`.`hogRegions_id`
             GROUP BY `tbl_hogPlayers`.`hogPlayers_id`
-            ORDER BY rating DESC 
+            ORDER BY rating DESC, countHog DESC 
             ;";
 
             $stmt = $this->connect()->prepare($sql);
