@@ -8,6 +8,7 @@ const rateHog_rating = document.getElementById('rateHog-rating');
 const rateHog_rank = document.getElementById('rateHog-rank');
 
 let hogRateId = 0;
+let detailsModal = new bootstrap.Modal(document.getElementById('hogDetails'))
 
 function submitNewHog() {
     console.log(newHog_name.value);
@@ -15,28 +16,28 @@ function submitNewHog() {
     console.log(newHog_region.value);
     console.log(newHog_rating.value);
     console.log(newHog_rank.value);
-    if (newHog_name.value !== ''){
+    if (newHog_name.value !== '') {
         $.ajax({
             dataType: 'json',
             data: ({
-                'newHog_name':newHog_name.value,
-                'newHog_btag':newHog_btag.value,
-                'newHog_region':newHog_region.value,
-                'newHog_rating':newHog_rating.value,
-                'newHog_rank':newHog_rank.value,
+                'newHog_name': newHog_name.value,
+                'newHog_btag': newHog_btag.value,
+                'newHog_region': newHog_region.value,
+                'newHog_rating': newHog_rating.value,
+                'newHog_rank': newHog_rank.value,
             }),
             type: 'post',
             url: 'new.php',
             success: function (result) {
                 console.log(result);
                 console.log('success: ' + result['data']);
-                if (result['status'] === 4){
+                if (result['status'] === 4) {
                     alert('This player is already in the database')
                 } else {
                     location.reload();
                 }
             },
-            error: function (result){
+            error: function (result) {
                 console.log(result);
                 console.log('error: ' + result['data']);
             }
@@ -56,29 +57,53 @@ function rateHog() {
     $.ajax({
         dataType: 'json',
         data: ({
-            'rateHog_id':hogRateId,
-            'rateHog_rating':rateHog_rating.value,
-            'rateHog_rank':rateHog_rank.value
+            'rateHog_id': hogRateId,
+            'rateHog_rating': rateHog_rating.value,
+            'rateHog_rank': rateHog_rank.value
         }),
         type: 'post',
         url: 'rate.php',
         success: function (result) {
             console.log(result);
             console.log('success: ' + result['data']);
-            if (result['status'] === 2){
-                alert('You have already voted on this player')
+            if (result['status'] === 2) {
+                alert('You have already voted on this player');
             } else {
                 location.reload();
             }
         },
-        error: function (result){
+        error: function (result) {
             console.log(result);
             console.log('error: ' + result['data']);
         }
     })
 }
 
-$(document).ready(function () {
+function detailUpdateShow(id, hogName) {
+    document.getElementById('hogDetails-title').innerText = 'Ratings History For: ' + hogName;
+    document.getElementById('hogDetails-content').innerHTML = '';
+
+    $.ajax({
+        dataType: 'html',
+        data: ({
+            'rateHog_id': id,
+        }),
+        type: 'post',
+        url: 'details.php',
+        success: function (result) {
+            document.getElementById('hogDetails-content').innerHTML = result;
+        },
+        error: function (result) {
+            console.log(result);
+            console.log('error: ' + result['data']);
+        }
+    })
+
+
+    detailsModal.show()
+}
+
+jQuery(function () {
     $('#hog-players').DataTable({
         paging: false,
     });

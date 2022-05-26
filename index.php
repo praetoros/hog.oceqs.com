@@ -89,13 +89,13 @@ $ranks = $HogSelect->getRankListWithId();
             $counter = 1;
             foreach ($HogSelect->getAllHogPlayers() as $hogPlayer) {
                 echo '<tr>';
-                echo '<td>' . $counter . '</td>';
-                echo '<td>' . $hogPlayer['name'] . '</td>';
-                echo '<td>' . $hogPlayer['bTag'] . '</td>';
-                echo '<td>' . $hogPlayer['region'] . '</td>';
-                echo '<td>' . (float)$hogPlayer['rating'] . '</td>';
-                echo '<td>' . $HogSelect->getSrRangeName((float)$hogPlayer['avgSrRange']) . '</td>';
-                echo '<td>' . $hogPlayer['countHog'] . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $counter . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $hogPlayer['name'] . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $hogPlayer['bTag'] . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $hogPlayer['region'] . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . (float)$hogPlayer['rating'] . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $HogSelect->getSrRangeName((float)$hogPlayer['avgSrRange']) . '</td>';
+                echo '<td onclick="detailUpdateShow(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">' . $hogPlayer['countHog'] . '</td>';
                 echo '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateHog" 
                     onclick="modalUpdate(' . $hogPlayer['id'] . ", '" . $hogPlayer['name'] . "'" . ')">Rate</button></td>';
                 echo '</tr>';
@@ -146,5 +146,33 @@ $ranks = $HogSelect->getRankListWithId();
             </div>
         </div>
     </div>
+    <div class="modal" id="hogDetails" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hogDetails-title">Ratings History For: </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Entry</th>
+                            <th>Rating</th>
+                            <th>Rank</th>
+                            <th>Submitted</th>
+                        </tr>
+                        </thead>
+                        <tbody id="hogDetails-content">
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
 <?php
 include "includes/footer.inc.php";

@@ -7,7 +7,9 @@ namespace Hog {
 
     class Hog extends Db
     {
-
+        /**
+         * @return array
+         */
         protected function returnAllHogPlayers(): array
         {
             $sql = "
@@ -34,6 +36,11 @@ namespace Hog {
             return $stmt->fetchAll();
         }
 
+        /**
+         * @param float $srRange
+         *
+         * @return array
+         */
         protected function returnSrRange(float $srRange): array
         {
             $sql = "
@@ -56,6 +63,9 @@ namespace Hog {
             return $stmt->fetchAll();
         }
 
+        /**
+         * @return array
+         */
         protected function returnRegionListWithId(): array
         {
             $sql = "
@@ -74,6 +84,9 @@ namespace Hog {
             return $stmt->fetchAll();
         }
 
+        /**
+         * @return array
+         */
         protected function returnRankListWithId(): array
         {
             $sql = "
@@ -89,7 +102,13 @@ namespace Hog {
             return $stmt->fetchAll();
         }
 
-
+        /**
+         * @param string|null $hogPlayers_bTag
+         * @param string      $hogPlayers_name
+         * @param int         $hogPlayers_region
+         *
+         * @return int
+         */
         protected function setNewHog(string|null $hogPlayers_bTag, string $hogPlayers_name, int $hogPlayers_region): int
         {
             $sql = "
@@ -110,8 +129,14 @@ namespace Hog {
             return (int)$dbh->lastInsertId();
         }
 
-
-
+        /**
+         * @param int    $hogRatings_rating
+         * @param int    $hogRatings_sr
+         * @param string $hogRatings_submitted
+         * @param int    $hogRatings_player
+         *
+         * @return int
+         */
         protected function setNewHogRating(int $hogRatings_rating, int $hogRatings_sr, string $hogRatings_submitted, int $hogRatings_player): int
         {
             $sql = "
@@ -132,6 +157,11 @@ namespace Hog {
             return 1;
         }
 
+        /**
+         * @param int $sr
+         *
+         * @return int
+         */
         protected function returnRankIdForSr(int $sr): int
         {
             $sql = "
@@ -154,7 +184,12 @@ namespace Hog {
             return $stmt->fetch()['id'];
         }
 
-
+        /**
+         * @param string $hogRatings_submitted
+         * @param int    $hogRatings_player
+         *
+         * @return bool
+         */
         protected function returnIfIpUsed(string $hogRatings_submitted, int $hogRatings_player): bool
         {
             $sql = "
@@ -179,6 +214,11 @@ namespace Hog {
             return (bool)$stmt->rowCount();
         }
 
+        /**
+         * @param string $hogPlayers_name
+         *
+         * @return bool
+         */
         protected function returnIfNameUsed(string $hogPlayers_name): bool
         {
             $sql = "
@@ -196,6 +236,33 @@ namespace Hog {
             ]);
 
             return (bool)$stmt->rowCount();
+        }
+
+        /**
+         * @param int $hogRatings_player
+         *
+         * @return array
+         */
+        protected function returnPlayerRatingsHistory(int $hogRatings_player): array
+        {
+            $sql = "
+            SELECT
+                hogRatings_rating as 'rating',
+                hogSr_name        as 'rank',
+                hogRatings_time   as 'time'
+            FROM `tbl_hogRatings`
+                JOIN `tbl_hogSr` ON `tbl_hogRatings`.`hogRatings_sr` = `tbl_hogSr`.`hogSr_id`
+            WHERE
+                `hogRatings_player` like :hogRatings_player
+            ORDER BY `hogRatings_id`
+            ;";
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([
+                'hogRatings_player' => $hogRatings_player
+            ]);
+
+            return $stmt->fetchAll();
         }
 
     }
