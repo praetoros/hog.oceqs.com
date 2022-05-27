@@ -266,6 +266,67 @@ namespace Hog {
             return $stmt->fetchAll();
         }
 
+        protected function returnIfWordBanned(string $banWord_word):bool
+        {
+            $sql = "
+            SELECT
+                *
+            FROM
+                `tbl_banWord`
+            WHERE
+                `banWord_word` like :banWord_word
+            AND
+                `banWord_active` like 1
+            ;";
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([
+                'banWord_word' => '%' . $banWord_word . '%'
+            ]);
+
+            return (bool)$stmt->rowCount();
+        }
+
+        protected function returnIfIpBanned(string $banIp_address):bool
+        {
+            $sql = "
+            SELECT
+                *
+            FROM
+                `tbl_banIp`
+            WHERE
+                `banIp_address` like :banIp_address
+                AND
+                `banIp_active` like 1
+            ;";
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([
+                'banIp_address' => $banIp_address
+            ]);
+
+            return (bool)$stmt->rowCount();
+        }
+
+
+        protected function setBannedIpF($banIp_address, $banIp_reason): bool
+        {
+            $sql = "
+            INSERT INTO `tbl_banIp` 
+                (`banIp_address`, `banIp_reason`, `banIp_active`) 
+            VALUES 
+                (:banIp_address, :banIp_reason, 1);
+            ;";
+
+            $stmt = $this->connect()->prepare($sql);
+            $stmt->execute([
+                'banIp_address' => $banIp_address,
+                'banIp_reason' => $banIp_reason
+            ]);
+
+            return true;
+        }
+
     }
 
 }

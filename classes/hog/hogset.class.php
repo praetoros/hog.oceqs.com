@@ -14,6 +14,11 @@ namespace Hog {
         {
             return $this->setNewHogRating($rating, $rank, $ip, $hogId);
         }
+
+        public function addBannedIpF(string $ipAddr, string $reason): bool
+        {
+            return $this->setBannedIpF($ipAddr, $reason);
+        }
     }
 
 }

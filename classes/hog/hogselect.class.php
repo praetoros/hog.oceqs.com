@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace Hog {
+    include $_SERVER['DOCUMENT_ROOT'] . 'includes/autoloader.inc.php';
 
     class HogSelect extends Hog
     {
@@ -75,6 +76,30 @@ namespace Hog {
         public function getPlayerRatingsHistory(int $hogId):array
         {
             return $this->returnPlayerRatingsHistory($hogId);
+        }
+
+        public function getIfBanned(string $name, string $ipAddr):bool
+        {
+            $wordBanned = $this->getIfWordBanned($name);
+            if ($wordBanned){
+                $HogSet = new HogSet();
+                $HogSet->addBannedIpF($ipAddr, $name);
+            }
+            if($wordBanned || $this->getIfIpBanned($ipAddr)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function getIfWordBanned(string $name):bool
+        {
+            return $this->returnIfWordBanned($name);
+        }
+
+        public function getIfIpBanned(string $ipAddr):bool
+        {
+            return $this->returnIfIpBanned($ipAddr);
         }
 
     }
