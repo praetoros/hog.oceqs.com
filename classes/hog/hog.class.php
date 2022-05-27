@@ -94,6 +94,7 @@ namespace Hog {
                 `tbl_hogSr`.`hogSr_id`   as 'id',
                 `tbl_hogSr`.`hogSr_name` as 'name'
             FROM `tbl_hogSr`
+            ORDER BY hogSr_id DESC
             ;";
 
             $stmt = $this->connect()->prepare($sql);

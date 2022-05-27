@@ -18,6 +18,7 @@ $ranks = $HogSelect->getRankListWithId();
         <h1>Hog Ratings</h1>
         <br>
         <h3>Add New Hog Player</h3>
+        <h5>Check the list with the search bar to see if a player has already been added. No slurs, Please.</h5>
         <table class="display table">
             <thead>
             <tr>
@@ -43,17 +44,17 @@ $ranks = $HogSelect->getRankListWithId();
                 </td>
                 <td>
                     <select name="rating" id="newHog-rating" class="form-control">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
                         <option value="10">10</option>
+                        <option value="9">9</option>
+                        <option value="8">8</option>
+                        <option value="7">7</option>
+                        <option value="6">6</option>
+                        <option value="5" selected>5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="0">0</option>
                     </select>
                 </td>
                 <td>
@@ -71,6 +72,7 @@ $ranks = $HogSelect->getRankListWithId();
         </table>
         <h3>Rate/View Existing Hog Players</h3>
         <h4>You can rate a player once every 24 hours</h4>
+        <h5>And please stop wasting both of our time making me delete 20 minutes of your griefing in about 15 seconds</h5>
         <table id="hog-players" class="display table table-hover">
             <thead>
             <tr>
@@ -117,17 +119,17 @@ $ranks = $HogSelect->getRankListWithId();
                     <div class="mb-3">
                         <label for="rateHog-rating" class="form-label">Rating (0-10) Higher is better</label>
                         <select name="rateHog-rating" class="form-control" id="rateHog-rating">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
                             <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                            <option value="0">0</option>
                         </select>
                     </div>
                     <div class="mb-3">

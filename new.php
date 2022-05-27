@@ -20,8 +20,10 @@ $rating = $_POST['newHog_rating'] ?? 0;
 if (preg_match('/^\w*$/',$name) && !$HogSelect->getIfNameUsed($name)){
     if (preg_match('/^[\w#]*$/',$btag) && preg_match('/^[1-5]$/',$region)){
         if (preg_match('/^\d$|^10$/',$rating) && preg_match('/^[1-7]$/',$rank)){
-            $hogId = $HogSet->addNewHog($btag, $name, $region);
-            $HogSet->addNewHogRating($rating, $rank, $_SERVER['REMOTE_ADDR'], $hogId);
+            if (!in_array($_SERVER['REMOTE_ADDR'],['104.28.245.103','167.179.175.212','104.28.213.104','101.183.150.70','104.28.35.7','104.28.35.2'])){
+                $hogId = $HogSet->addNewHog($btag, $name, $region);
+                $HogSet->addNewHogRating($rating, $rank, $_SERVER['REMOTE_ADDR'], $hogId);
+            }
             echo json_encode(['status' => 1,'data'=>$hogId]);
         } else{
             echo json_encode(['status' => 0,'data'=>'ratingOrRank']);
