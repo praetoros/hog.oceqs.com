@@ -228,7 +228,7 @@ namespace Hog {
             FROM
                 `tbl_hogPlayers`
             WHERE
-                `hogPlayers_name` like :hogPlayers_name
+                UPPER(`hogPlayers_name`) like UPPER(:hogPlayers_name)
             ;";
 
             $stmt = $this->connect()->prepare($sql);
@@ -274,14 +274,14 @@ namespace Hog {
             FROM
                 `tbl_banWord`
             WHERE
-                `banWord_word` like :banWord_word
+                UPPER(`banWord_word`) like UPPER(:banWord_word)
             AND
                 `banWord_active` like 1
             ;";
 
             $stmt = $this->connect()->prepare($sql);
             $stmt->execute([
-                'banWord_word' => '%' . $banWord_word . '%'
+                'banWord_word' => strtolower($banWord_word)
             ]);
 
             return (bool)$stmt->rowCount();

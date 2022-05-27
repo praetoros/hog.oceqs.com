@@ -1,4 +1,7 @@
 <?php
+
+
+
 if (true){
     ini_set('display_errors', '1');
     ini_set('display_startup_errors', '1');
@@ -9,6 +12,8 @@ session_start();
 
 include 'includes/autoloader.inc.php';
 
+use Hog\HogSet;
+
 $HogSelect = new \Hog\HogSelect();
 $HogSet = new \Hog\HogSet();
 
@@ -17,10 +22,10 @@ $btag = $_POST['newHog_btag'] ?? null;
 $name = $_POST['newHog_name'] ?? null;;
 $region = $_POST['newHog_region'] ?? 0;
 $rating = $_POST['newHog_rating'] ?? 0;
-if (preg_match('/^\w*$/',$name) && !$HogSelect->getIfNameUsed($name)){
+if (preg_match('/^\w*$/',$name)){
     if (preg_match('/^[\w#]*$/',$btag) && preg_match('/^[1-5]$/',$region)){
         if (preg_match('/^\d$|^10$/',$rating) && preg_match('/^[1-7]$/',$rank)){
-            if (!$HogSelect->getIfBanned($name, $_SERVER['REMOTE_ADDR'])){
+            if (!$HogSelect->getIfBanned($name, $_SERVER['REMOTE_ADDR'], new HogSet()) && !$HogSelect->getIfNameUsed($name)){
                 $hogId = $HogSet->addNewHog($btag, $name, $region);
                 $HogSet->addNewHogRating($rating, $rank, $_SERVER['REMOTE_ADDR'], $hogId);
                 echo json_encode(['status' => 1,'data'=>$hogId]);
